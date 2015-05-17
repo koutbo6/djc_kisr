@@ -1,36 +1,67 @@
 from django.db import models
 
 # Create your models here.
-# Create your models here.
+
+
 class Poll(models.Model):
     # CharField holds a string
     # The first parameter is verbose_name
     # max_length is number of characters allowed
     name = models.CharField("poll name", max_length=64)
-    
+
+    # category to distinguish poll types
+    category  = models.CharField("poll category", max_length=64)
+
     # TextField holds a variable length field
     # usually used for large string based documents
     # use it for descriptions and when you do not
     # need to search the field
-    question = models.TextField("product description",blank=True)
+    # notice how we didn't include the verbose_name
+    # Django has reasonable defaults for converting
+    # the field name into a human readable form
+    question = models.TextField(blank=True)
 
-class Response(models.Model):
+
+class Choice(models.Model):
     # This established a one to many relationship between
-    # Product (one) and Rating (Many)
+    # (one) Poll has (Many) Choice
     # other relations are OneToOne and ManyToMany
-    poll = models.ForeignKey(Product, verbose_name="reviewed product")
-    # Float value that is 0.0 by default
-    # null parameter means that we can store None value in DB
-    # the null parameter is usefull in textbased fields
-    # because empty list is always stored
-    score = models.FloatField(default=0.0, blank=True, null=True) #null is useless in text fields
-    comment = models.TextField("product description",blank=True)
-    # Store DimeTime in which review was created
+    poll = models.ForeignKey(Poll, verbose_name="poll question")
+
+    # The answers to be shown for polls
+    label = models.CharField("answer choice", max_length=200)
+
+    # Store DimeTime to keep track of our polls
     # auto_now_add means that the current datetime
     # is inserted when the object is first created
     # When auto_now_add is True then default and blank
     # are overridden to now and True
-    created_at = models.DateTimeField("reviewed at", auto_now_add=True)
+    # verbose_name will be "Created At"
+    # auto_now_add means set date/time on first save only
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # keep track of last change made to poll
     # auto_now means update the field to now
     # everytime it is saved
-    updated_at = models.DateTimeField("last updated", auto_now_add=True, auto_now=True)
+    # verbose_name will be "last updated"
+    # auto_now means update date/time on save
+    updated_at = models.DateTimeField(
+        "last updated", auto_now=True)
+
+
+class Response(models.Model):
+    # every response will have a single choice made
+    # or none
+    # remember that response will be related to Poll
+    # through Choice
+    choice = models.ForeignKey(Choice, null=True, blank=True)
+
+    # null parameter means that we can store None value in DB
+    # For text based fields, we never set null to True
+    # because Django will always store and empty string ""
+    # null only makes finding empty fields more difficult
+    # as we will need to search for "" and None
+    comment = models.TextField("product description", blank=True)
+
+    # Just like poll, we need to know time of response
+    submitted_at = models.DateTimeField(auto_now_add=True)
