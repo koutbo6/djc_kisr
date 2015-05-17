@@ -65,5 +65,6 @@ class Response(models.Model):
     # as we will need to search for "" and None
     comment = models.TextField(blank=True)
 
+
     # Just like poll, we need to know time of response
     submitted_at = models.DateTimeField(auto_now_add=True)
