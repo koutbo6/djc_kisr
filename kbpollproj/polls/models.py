@@ -21,6 +21,8 @@ class Poll(models.Model):
     # the field name into a human readable form
     question = models.TextField(blank=True)
 
+    def __str__(self):
+        return "{}: {}".format(self.name, self.category)
 
 class Choice(models.Model):
     # This established a one to many relationship between
@@ -61,7 +63,7 @@ class Response(models.Model):
     # because Django will always store and empty string ""
     # null only makes finding empty fields more difficult
     # as we will need to search for "" and None
-    comment = models.TextField("product description", blank=True)
+    comment = models.TextField(blank=True)
 
     # Just like poll, we need to know time of response
     submitted_at = models.DateTimeField(auto_now_add=True)

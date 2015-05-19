@@ -22,10 +22,7 @@ PROJECT_DIR = Path(__file__).ancestor(1)
 MEDIA_ROOT = PROJECT_DIR.child("media")
 STATIC_ROOT = PROJECT_DIR.child("static")
 STATICFILES_DIRS = (PROJECT_DIR.child("assets"), )
-<<<<<<< HEAD
 # pre Django 1.8
-=======
->>>>>>> polls project is correctly setup
 TEMPLATE_DIRS = (PROJECT_DIR.child("templates"), )
 
 # Quick-start development settings - unsuitable for production
