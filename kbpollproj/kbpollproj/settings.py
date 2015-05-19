@@ -47,21 +47,21 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
 )
 
-MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+# add the following lines
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
+
 
 ROOT_URLCONF = 'kbpollproj.urls'
 
+# following option works in Django 1.8+ only
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -73,13 +73,44 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # added following lines
+                'allauth.account.context_processors.account',
+                'allauth.socialaccount.context_processors.socialaccount',
             ],
         },
     },
 ]
 
+# add the following lines only in Django pre-1.8
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     'django.template.context_processors.debug',
+#     'django.template.context_processors.request',
+#     'django.contrib.auth.context_processors.auth',
+#     'django.contrib.messages.context_processors.messages',
+#     'allauth.account.context_processors.account',
+#     'allauth.socialaccount.context_processors.socialaccount',
+# )
+
+SITE_ID = 1
+# to prevent sending out email for confirming user email
+# change to "optional" or "mandatory" if you need it
+# but you have to find out how to configure email settings
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+
 WSGI_APPLICATION = 'kbpollproj.wsgi.application'
 
+
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
