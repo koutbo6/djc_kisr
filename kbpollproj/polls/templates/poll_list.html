@@ -2,18 +2,20 @@
 
 {% block content %}
 <h1>Available Polls</h1>
-<ul>
+<div class="list-group">
 {% for p in polls %}
-    <li>
-        {{ p.name }} category: {{ p.category }}
-    </li>
+        <a class="list-group-item" href="{% url 'poll_details' p.pk %}">
+          <span class="badge">
+            {{ p.category }}
+          </span>
+          <h4 class="list-group-item-heading">{{ p.name }}</h4>
+          <p class="list-group-item-text">{{ p.question }}</p>
+        </a>
 {% empty %}
-<li>
     <h2>
     No Polls Available
     </h2>
-</li>
 
 {% endfor %}
-</ul>
+</div>
 {% endblock %}
