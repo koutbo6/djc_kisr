@@ -5,7 +5,7 @@
 <ul>
 {% for p in polls %}
     <li>
-        {{ p.name }} category: {{ p.category }}
+        <a href="{% url 'poll_details' p.pk %}">{{ p.name }}</a> category: {{ p.category }}
     </li>
 {% empty %}
 <li>

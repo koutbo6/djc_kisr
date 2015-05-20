@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ poll.question }}</h1>
+<ul>
+{% for c in poll.choice_set.all %}
+  <li>
+    {{ c.label }}
+  </li>
+{% empty %}
+  <li>
+      <h2>
+      No Polls Available
+      </h2>
+  </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
