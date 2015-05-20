@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Available Polls</h1>
+<ul>
+{% for p in polls %}
+    <li>
+        {{ p.name }} category: {{ p.category }}
+    </li>
+{% empty %}
+<li>
+    <h2>
+    No Polls Available
+    </h2>
+</li>
+
+{% endfor %}
+</ul>
+{% endblock %}
