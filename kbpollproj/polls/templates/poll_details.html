@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Available Polls</h1>
+<h1>{{ poll.question }}</h1>
 <ul>
-{% for p in polls %}
+{% for c in poll.choice_set.all %}
     <li>
-        <a href="{% url 'poll_details' p.pk %}">{{ p.name }}</a> category: {{ p.category }}
+        {{ c.label }}
     </li>
 {% empty %}
 <li>
