@@ -1,17 +1,17 @@
 from django.shortcuts import render
 from django.http import Http404
+from django.views.generic import ListView, DetailView
 from .models import Poll
 
 
-def poll_list(request):
-    # construct a queryset
-    qs = Poll.objects.all()
-    return render(request, "poll_list.html", {"polls": qs})
+class PollList(ListView):
+    model = Poll
+    template_name = "poll_list.html"
+    context_object_name = "polls"
 
 
-def poll_details(request, poll_id):
-    try:
-        poll = Poll.objects.get(pk=poll_id)
-    except Poll.DoesNotExist:
-        raise Http404
-    return render(request, "poll_details.html", {"poll": poll})
+class PollDetails(DetailView):
+    model = Poll
+    template_name = "poll_details.html"
+    context_object_name = "poll"
+    pk_url_kwarg = "poll_id"
