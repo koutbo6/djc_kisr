@@ -1,6 +1,5 @@
 from django.db import models
-
-# Create your models here.
+from django.conf import settings
 
 
 class Poll(models.Model):
@@ -77,3 +76,16 @@ class Response(models.Model):
 
     def choice_label(self):
         return self.choice.label
+
+
+class UserProfile(models.Model):
+    GENDER = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+    # every user has a single profile
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    location = models.CharField(max_length=64, blank=True)
+    bio = models.TextField(blank=True)
+    phone = models.CharField(max_length=64, blank=True)
+    gender = models.CharField(max_length=1, blank=True, choices=GENDER)
