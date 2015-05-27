@@ -53,6 +53,9 @@ class Choice(models.Model):
     updated_at = models.DateTimeField(
         "last updated", auto_now=True)
 
+    def __str__(self):
+        return self.label
+
 
 class Response(models.Model):
     # every response will have a single choice made
