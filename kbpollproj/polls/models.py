@@ -89,3 +89,11 @@ class UserProfile(models.Model):
     bio = models.TextField(blank=True)
     phone = models.CharField(max_length=64, blank=True)
     gender = models.CharField(max_length=1, blank=True, choices=GENDER)
+
+
+class Survey(models.Model):
+    name = models.CharField(max_length=64)
+    questions = models.ManyToManyField(Poll)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(
+        "last updated", auto_now=True)
