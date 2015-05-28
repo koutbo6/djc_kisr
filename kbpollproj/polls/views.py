@@ -28,18 +28,7 @@ def poll_response(request, poll_id):
         form = ResponseForm(request.POST)
         # validate the data
         if form.is_valid():
-            # we now have validated data incleaned_data
-            # get the respondent choice object
-            r_choice = form.cleaned_data['choice']
-            # get the respondent comment
-            r_comment = form.cleaned_data['comment']
-
-            # create the new response entry
-            # We can do it in our choice reverse relation
-            r_choice.response_set.create(
-                comment=r_comment,
-            )
-
+            form.save()
             # success message
             messages.success(request, 'Your response was successfully posted.')
 
