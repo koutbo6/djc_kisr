@@ -62,7 +62,7 @@ class Response(models.Model):
     # or none
     # remember that response will be related to Poll
     # through Choice
-    choice = models.ForeignKey(Choice, null=True, blank=True)
+    choice = models.ForeignKey(Choice, default=0)
 
     # null parameter means that we can store None value in DB
     # For text based fields, we never set null to True
