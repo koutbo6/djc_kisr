@@ -4,7 +4,7 @@
 <h1>Available Polls</h1>
 <div class="list-group">
 {% for p in polls %}
-        <a class="list-group-item" href="{% url 'poll_details' p.pk %}">
+        <a class="list-group-item" href="{% url 'poll_response' p.pk %}">
           <span class="badge">
             {{ p.category }}
           </span>

@@ -142,3 +142,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Set the proper bootstrap classes for the message types we want to use
+from django.contrib.messages import constants as message_constants
+MESSAGE_TAGS = {
+    message_constants.SUCCESS: 'alert-success',
+    message_constants.ERROR: 'alert-danger',
+}

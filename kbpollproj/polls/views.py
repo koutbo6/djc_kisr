@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from django.views.generic import ListView, DetailView
+from django.contrib import messages
 from .models import Poll, Choice
 from .forms import ResponseForm
 
@@ -38,6 +39,9 @@ def poll_response(request, poll_id):
             r_choice.response_set.create(
                 comment=r_comment,
             )
+
+            # success message
+            messages.success(request, 'Your response was successfully posted.')
 
             # now redirect to poll list
             return redirect('poll_list')
