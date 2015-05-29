@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import Http404
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
+
 from .models import Poll, Choice
-from .forms import ResponseForm
+from .forms import ResponseForm, PollForm, InlineChoiceFormSet
+
+
 
 class PollList(ListView):
     model = Poll
@@ -50,5 +52,30 @@ def poll_response(request, poll_id):
         {
             'poll': poll,
             'form': form,
+        }
+    )
+
+
+def poll_create(request):
+    if request.method == 'POST':
+        form = PollForm(request.POST)
+        print(request.POST)
+        if form.is_valid():
+            poll = form.save(commit=False)
+            formset = InlineChoiceFormSet(request.POST, instance=poll)
+            if formset.is_valid():
+                poll.save()
+                formset.save()
+                messages.success(request, 'Poll was successfully created.')
+                return redirect('poll_list')
+    else:
+        form = PollForm()
+        formset = InlineChoiceFormSet(instance=Poll())
+    return render(
+        request,
+        'poll_create.html',
+        {
+            "form": form,
+            "formset": formset,
         }
     )
