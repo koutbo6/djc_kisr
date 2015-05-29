@@ -149,3 +149,7 @@ MESSAGE_TAGS = {
     message_constants.SUCCESS: 'alert-success',
     message_constants.ERROR: 'alert-danger',
 }
+
+
+LOGIN_REDIRECT_URL = '/polls/list/'
+ACCOUNT_SIGNUP_FORM_CLASS = 'polls.forms.UserProfileForm'
