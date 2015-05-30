@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .models import Poll, Choice
 from .forms import ResponseForm, PollForm, InlineChoiceFormSet
@@ -20,6 +21,7 @@ class PollDetails(DetailView):
     pk_url_kwarg = "poll_id"
 
 
+@login_required
 def poll_response(request, poll_id):
     # get the poll object
     poll = get_object_or_404(Poll, pk=poll_id)

@@ -1,6 +1,5 @@
 from django import forms
 from django.forms.models import inlineformset_factory
-from django.contrib.auth import get_user_model
 from .models import Response, Poll, Choice, UserProfile
 
 
