@@ -58,6 +58,7 @@ def poll_response(request, poll_id):
     )
 
 
+@login_required
 def poll_create(request):
     if request.method == 'POST':
         form = PollForm(request.POST)
@@ -82,8 +83,10 @@ def poll_create(request):
     )
 
 
+@login_required
 def poll_edit(request, poll_id):
-    poll = get_object_or_404(Poll, pk=poll_id)
+    poll = get_object_or_404(Poll, pk=poll_id, author=request.user)
+
     # enable ability to delete choices
     InlineChoiceFormSet.can_delete = True
 

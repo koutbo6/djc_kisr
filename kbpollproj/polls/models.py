@@ -3,6 +3,8 @@ from django.conf import settings
 
 
 class Poll(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+
     # CharField holds a string
     # The first parameter is verbose_name
     # max_length is number of characters allowed

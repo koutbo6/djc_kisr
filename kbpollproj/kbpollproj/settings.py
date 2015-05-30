@@ -150,6 +150,8 @@ MESSAGE_TAGS = {
     message_constants.ERROR: 'alert-danger',
 }
 
-
+# Which page to send the user after
+# successful login
 LOGIN_REDIRECT_URL = '/polls/list/'
+# which form to use for additiona registration info
 ACCOUNT_SIGNUP_FORM_CLASS = 'polls.forms.UserProfileForm'
