@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Avg
 
 from .models import Poll, Choice
 from .forms import ResponseForm, PollForm, InlineChoiceFormSet
@@ -16,6 +16,24 @@ class PollList(ListView):
         total_choices=Count('choice', distinct=True),
         total_responses=Count('choice__response'),
     )
+
+    def get_context_data(self, **kwargs):
+        # run super implementation of method to get context
+        context = super().get_context_data(**kwargs)
+        # now add to it
+        stats = {}
+        stats["total_polls"] = self.queryset.count()
+        # will add avg_choices and avg_responses to stats
+        stats.update(
+            self.queryset.aggregate(
+                avg_choices=Avg('total_choices'),
+                avg_responses=Avg('total_responses')
+            )
+        )
+        # add stats to the context
+        context["stats"] = stats
+        # do not forget to return the context
+        return context
 
 
 class PollDetails(DetailView):

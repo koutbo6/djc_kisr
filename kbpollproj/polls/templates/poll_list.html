@@ -2,6 +2,43 @@
 
 {% block content %}
 <h1>Available Polls</h1>
+
+{% if stats %}
+<div class="panel panel-default">
+  <div class="panel-heading">Poll Statistics</div>
+  <div class="panel-body">
+    <table class="table table-condensed">
+        <tbody>
+            <tr>
+                <td>
+                    Total Polls
+                </td>
+                <td>
+                    {{ stats.total_polls }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Average Choices
+                </td>
+                <td>
+                    {{ stats.avg_choices }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Average Responses
+                </td>
+                <td>
+                    {{ stats.avg_responses }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
 <div class="list-group">
 {% for p in polls %}
         <a class="list-group-item" href="{% url 'poll_response' p.pk %}">
