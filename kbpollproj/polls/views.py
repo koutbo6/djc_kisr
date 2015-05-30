@@ -2,16 +2,20 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 from .models import Poll, Choice
 from .forms import ResponseForm, PollForm, InlineChoiceFormSet
-
 
 
 class PollList(ListView):
     model = Poll
     template_name = "poll_list.html"
     context_object_name = "polls"
+    queryset = Poll.objects.annotate(
+        total_choices=Count('choice', distinct=True),
+        total_responses=Count('choice__response'),
+    )
 
 
 class PollDetails(DetailView):

@@ -5,11 +5,19 @@
 <div class="list-group">
 {% for p in polls %}
         <a class="list-group-item" href="{% url 'poll_response' p.pk %}">
-          <span class="badge">
-            {{ p.category }}
-          </span>
-          <h4 class="list-group-item-heading">{{ p.name }}</h4>
-          <p class="list-group-item-text">{{ p.question }}</p>
+            <span class="badge">
+              {{ p.total_responses }} responses
+            </span>
+          <h4 class="list-group-item-heading">{{ p.name }}
+              <span class="badge">
+                {{ p.category }}
+              </span>
+          </h4>
+          <p class="list-group-item-text">{{ p.question }}
+              <span class="badge">
+                {{ p.total_choices }} choices
+              </span>
+          </p>
         </a>
 {% empty %}
     <h2>
