@@ -1,8 +1,20 @@
+import json
+
 from django.db import models
 from django.conf import settings
+from django.db.models import Count
+from django.utils.safestring import mark_safe
+
+COLOR_LIST = [
+    '#DC143C', '#912CEE', '#3A5FCD',
+    '#8DB6CD', '#BBFFFF', '#458B74',
+    '#CDCD00', '#DAA520', '#FF8C00',
+    '#8B7D7B', '#8E8E38', '#A2CD5A',
+]
 
 
 class Poll(models.Model):
+
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     # CharField holds a string
@@ -27,6 +39,21 @@ class Poll(models.Model):
 
     def choice_count(self):
         return self.choice_set.count()
+
+    def get_char_data(self):
+        data = []
+        for i, item in enumerate(
+            self.choice_set.values('label').annotate(
+                value=Count('response'))):
+            item.update({'color': COLOR_LIST[i]})
+            data.append(item)
+        # will return a list of dictionaries
+        # containing label and value
+        # which chart.js expects for pie charts
+        # however, it must be in json format
+        # which is why we need to mark_safe
+        # so django doesnt escape
+        return mark_safe(json.dumps(data))
 
 
 class Choice(models.Model):

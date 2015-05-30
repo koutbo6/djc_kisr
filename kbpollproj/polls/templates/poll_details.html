@@ -2,6 +2,9 @@
 
 {% block content %}
 <h1>{{ poll.question }}</h1>
+
+<canvas id="skills" width="300" height="300"></canvas>
+
 <ul class="list-group">
 {% for c in poll.choice_set.all %}
     <li class="list-group-item">
@@ -16,4 +19,11 @@
 
 {% endfor %}
 </ul>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js">
+</script>
+<script type="text/javascript">
+var context = document.getElementById('skills').getContext('2d');
+var skillsChart = new Chart(context).Pie({{ poll.get_char_data }});
+</script>
+
 {% endblock %}
