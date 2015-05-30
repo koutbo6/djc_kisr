@@ -113,3 +113,12 @@ def poll_edit(request, poll_id):
             "formset": formset,
         }
     )
+
+
+class UserPollList(ListView):
+    model = Poll
+    template_name = "poll_list.html"
+    context_object_name = "polls"
+
+    def get_queryset(self):
+        return Poll.objects.filter(author=self.kwargs["user_id"])
