@@ -7,7 +7,7 @@ class Poll(models.Model):
     # The first parameter is verbose_name
     # max_length is number of characters allowed
     name = models.CharField("poll name", max_length=64)
-    
+
     # TextField holds a variable length field
     # usually used for large string based documents
     # use it for descriptions and when you do not
@@ -18,7 +18,7 @@ class Response(models.Model):
     # This established a one to many relationship between
     # Product (one) and Rating (Many)
     # other relations are OneToOne and ManyToMany
-    poll = models.ForeignKey(Product, verbose_name="reviewed product")
+    poll = models.ForeignKey(Poll, verbose_name="reviewed product")
     # Float value that is 0.0 by default
     # null parameter means that we can store None value in DB
     # the null parameter is usefull in textbased fields
